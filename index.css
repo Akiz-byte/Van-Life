@@ -113,6 +113,7 @@ header a:focus {
 }
 .article-content-hero {
     font-size: 1rem;
+    max-width:374px;    
 }
 .date {
     font-size: 0.875rem;
