@@ -1,0 +1,249 @@
+*, *::before,*::after {
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    line-height: 1.6;
+    width: 414px;
+    display: flex;
+    flex-direction: column;
+    min-height: 94.8vh;
+}
+
+/* HEADER */
+
+header{
+    width: 100%;
+    height: 59px;
+    display: flex;
+    align-items: center;    
+    justify-content: space-between;
+}
+
+header div{
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+}
+header img{
+    width: 25px;
+    height: 25px;
+}
+
+header h1{
+    font-size: 0.875rem;
+    font-weight: bold;
+    line-height: 108%;
+    letter-spacing: -3%;
+}
+
+
+header ul{
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    list-style: none;
+}
+
+header a{
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 600;
+    line-height: 100%;
+    font-size: 0.75rem;
+}
+
+header a:hover,
+header a:focus {
+    outline: none;
+    color: #007BFF;
+}
+
+/* MAIN */
+
+
+
+.hero {
+    width: 100%;
+    height: 293px;
+    min-width: 414px;
+    height: auto;
+    position: relative;
+    color: #FFFFFF;
+}
+
+.hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("./images/hero background.png");
+    background-size: cover;
+    background-position: bottom;
+    transform: scaleX(-1);
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 4em 2em;
+    max-width: 660px;
+    margin: 0;
+}
+
+.date,
+.article-title-hero,
+.article-content-hero {
+    width: 100%;
+    margin: 0;
+}
+
+/* Responsive typography */
+.article-title-hero {
+    font-size: 2rem;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+.article-content-hero {
+    font-size: 1rem;
+}
+.date {
+    font-size: 0.875rem;
+}
+
+/* Article styles */
+.blog-four,.blog-five, .blog-six {
+    display: none;
+} 
+.article-listing{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(374px, 1fr));
+}
+
+.article-image,
+.article-date,
+.article-title{
+    margin: 0.2em 0;
+}
+
+.article-image {
+    width: 374px;
+    height: 232px;
+}
+
+article{
+    width: 374px;
+    margin: 0 auto;
+    margin-top: 2em;
+}
+
+.article-date{
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+}
+
+.article-title{
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.article-content{
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    color: #505050;
+    margin-top: 0.5em;
+    line-height: 1.25;
+}
+
+/* view more button */
+
+.view-more-btn{
+    width: 100%;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0%;
+    text-decoration: underline;
+    text-decoration-style: solid;
+
+    margin: 2em auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.view-more-btn:hover,
+.view-more-btn:focus {
+    outline: none;
+    color: #007BFF;
+}
+
+/* FOOTER */
+footer{
+    
+    width: 100%; height: 105px;
+    padding: 2em 0;
+    margin-top: 3em;
+    text-align: center;
+    background-color: #202020;
+}
+
+.footer-text {
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 12px;
+    text-align: center;
+    color: #ececec;
+    margin: auto;
+}
+
+.footer-copy {
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    color: #d7d7d7;
+}
+
+@media (min-width: 480px) {
+    body{
+        width: 100%;
+    }
+    .hero {
+        height: 488px;
+    }
+    .hero-image{
+        background-position: 10% 70% ;
+    }
+    .hero-content {
+        
+        padding: 4em 4em;
+        max-width: 900px;
+    }
+    /* .blog-four,.blog-five, .blog-six {
+        display: grid;
+    }  */
+    .article-title-hero {
+        font-size: 2.5rem;
+    }
+    .article-content-hero {
+        margin-top: 1em;
+        width: 620px;
+        font-size: 1.125rem;
+    }
+    .date {
+        margin-top: 10em;
+        font-size: 1rem;
+    }
+}

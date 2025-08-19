@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="header"> </div>
+
+    <main>
+        <section class="hero">
+            <div class="hero-image"></div>
+            
+            <div class="hero-content">
+                <p class="date">JULY 23, 2022</p>
+                <h2 class="article-title-hero">My new journey as a bootcamp student.</h2>
+                <p class="article-content-hero">After several months of learning in the Frontend Developer Career Path, I've made the big jump over to the Bootcamp to get expert code reviews of my Solo Projects projects and meet like-minded peers.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="article-listing"></div>
+
+    <div>
+        <button class="view-more-btn" onclick="document.querySelectorAll('.blog-four, .blog-five, .blog-six').forEach(blog => blog.style.display = 'block'); this.style.display = 'none';">
+            View More
+        </button>   
+    </div>
+
+    <div id="footer"></div>
+
+      <script>
+    fetch('header.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('header').innerHTML = html;
+      });
+
+    fetch('article-listing.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('article-listing').innerHTML = html;
+        });
+    
+    fetch('footer.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
+  </script>
+</body>
+</html>
