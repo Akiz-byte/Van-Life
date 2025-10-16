@@ -30,7 +30,6 @@ export default function Header() {
                     <img src={logoUrl} alt="VanLife" className="site-logo-mark" />
                 </Link>
 
-                {/* Hamburger button for mobile */}
                 <button 
                     className="hamburger-btn" 
                     onClick={toggleMobileMenu}
@@ -42,7 +41,6 @@ export default function Header() {
                     <span className={`hamburger-line ${mobileMenuOpen ? "open" : ""}`}></span>
                 </button>
 
-                {/* Navigation */}
                 <nav className={`main-nav ${mobileMenuOpen ? "mobile-open" : ""}`}>
                     <NavLink
                         to="/host"
@@ -77,7 +75,6 @@ export default function Header() {
                 </nav>
             </div>
 
-            {/* Overlay for mobile menu */}
             {mobileMenuOpen && <div className="mobile-overlay" onClick={closeMobileMenu}></div>}
         </header>
     )

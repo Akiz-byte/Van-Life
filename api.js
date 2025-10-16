@@ -13,14 +13,23 @@ import {
 } from "firebase/firestore/lite"
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile } from "firebase/auth"
 
+// Read Firebase config from Vite environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyAdKInlurADOjxHQeHNQmNWQ2xLmd3FwsI",
-  authDomain: "live-vans-life.firebaseapp.com",
-  projectId: "live-vans-life",
-  storageBucket: "live-vans-life.firebasestorage.app",
-  messagingSenderId: "950507739255",
-  appId: "1:950507739255:web:2426d523c135b9911e8e72"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
+
+// Optional: warn if any env variables are missing
+if (!firebaseConfig.apiKey || !firebaseConfig.projectId || !firebaseConfig.appId) {
+    // eslint-disable-next-line no-console
+    console.warn(
+        "Firebase environment variables are missing. Please create a .env file with VITE_FIREBASE_* values."
+    )
+}
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
@@ -66,35 +75,7 @@ export async function getHostVans() {
     return vans
 }
 
-/* 
-This 👇 isn't normally something you'd need to do. Instead, you'd 
-set up Firebase security rules so only the currently logged-in user 
-could edit their vans.
-
-https://firebase.google.com/docs/rules
-
-I'm just leaving this here for educational purposes, as it took
-me a while to find the `documentId()` function that allows you
-to use a where() filter on a document's ID property. (Since normally
-it only looks at the data() properties of the document, meaning you
-can't do `where("id", "==", id))`
-
-It also shows how you can chain together multiple `where` filter calls
-*/
-
-// export async function getHostVan(id) {
-//     const q = query(
-//         vansCollectionRef,
-//         where(documentId(), "==", id),
-//         where("hostId", "==", "123")
-//     )
-//     const snapshot = await getDocs(q)
-//     const vans = snapshot.docs.map(doc => ({
-//         ...doc.data(),
-//         id: doc.id
-//     }))
-//     return vans[0]
-// }
+//
 
 export async function loginUser({ email, password }) {
     const auth = getAuth()

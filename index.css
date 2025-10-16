@@ -42,7 +42,6 @@ header {
     border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-/* centered inner container */
 .header-inner {
     width: 100%;
     max-width: 1080px;
@@ -108,7 +107,6 @@ nav {
     gap: 6px;
 }
 
-/* Hamburger menu button - hidden on desktop */
 .hamburger-btn {
     display: none;
     flex-direction: column;
@@ -140,12 +138,10 @@ nav {
     transform: translateY(-6px) rotate(-45deg);
 }
 
-/* Mobile overlay */
 .mobile-overlay {
     display: none;
 }
 
-/* Mobile responsive styles */
 @media (max-width: 768px) {
     .hamburger-btn {
         display: flex;
@@ -227,12 +223,10 @@ main {
     flex: 1;
 }
 
-/* Add spacing for all pages except home (which uses full viewport) */
 main .page-transition:not(:has(.home-container)) {
     padding-bottom: 48px;
 }
 
-/* Page Transitions */
 .page-transition {
     animation-duration: 0.3s;
     animation-fill-mode: both;
@@ -268,7 +262,6 @@ main .page-transition:not(:has(.home-container)) {
     }
 }
 
-/* Skeleton Loaders */
 .skeleton {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
@@ -439,7 +432,6 @@ footer {
     color: #777;
 }
 
-/* Responsive footer */
 @media (max-width: 768px) {
     .footer-inner {
         grid-template-columns: 1fr;
@@ -498,7 +490,6 @@ footer {
     transform: translate(1px, 1px);
 }
 
-/*** HOME PAGE ***/
 .home-container {
     position: relative;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.46)),
@@ -508,19 +499,15 @@ footer {
     background-position: center;
     color: white;
     padding: 72px 16px;
-    /* Fill viewport height from below sticky header; footer now auto-sizes */
     min-height: calc(100vh - 72px);
 }
 
-/* Prefer small viewport height on mobile to account for browser UI */
 @supports (height: 100svh) {
     .home-container {
         min-height: calc(100svh - 72px);
     }
 }
 
-/* Aspect-ratio based focal tweaks */
-/* The SVG scales nicely across aspect ratios; no extra position tweaks needed */
 
 .home-inner {
     width: 100%;

@@ -37,9 +37,22 @@ Prerequisites:
 npm install
 ```
 
-2. Configure Firebase
+2. Configure Firebase (.env)
 
-Update the Firebase config in `api.js` with your project's values (apiKey, authDomain, projectId, etc.).
+Create a `.env` file in the project root using the provided `.env.example` and fill in your Firebase values.
+
+```
+cp .env.example .env
+# then edit .env and set:
+VITE_FIREBASE_API_KEY=...
+VITE_FIREBASE_AUTH_DOMAIN=...
+VITE_FIREBASE_PROJECT_ID=...
+VITE_FIREBASE_STORAGE_BUCKET=...
+VITE_FIREBASE_MESSAGING_SENDER_ID=...
+VITE_FIREBASE_APP_ID=...
+```
+
+Note: Vite only exposes variables prefixed with `VITE_`. The app now reads these from `import.meta.env` in `api.js`.
 
 3. Run the dev server
 
