@@ -1,0 +1,22 @@
+{
+  "name": "vans-life",
+  "description": "Vans-Life: a React app showcasing van listings, client-side routing, and Firebase-backed data.",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "firebase": "^12.4.0",
+    "miragejs": "0.1.46",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "4.7.1",
+    "react-router-dom": "6.4.3",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "*"
+  }
+}
