@@ -1,19 +1,33 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { BsStarFill } from "react-icons/bs"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { getHostVans } from "../../api"
+import { DashboardSkeleton } from "../../components/SkeletonLoader"
 
 export default function Dashboard() {
     const [vans, setVans] = React.useState([])
-    const [loading, setLoading] = React.useState(false)
+    const [loading, setLoading] = React.useState(true)
     const [error, setError] = React.useState(null)
+    const [authReady, setAuthReady] = React.useState(false)
+
     React.useEffect(() => {
+        const auth = getAuth()
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setAuthReady(true)
+        })
+        return () => unsubscribe()
+    }, [])
+
+    React.useEffect(() => {
+        if (!authReady) return
+        
         setLoading(true)
         getHostVans()
             .then(data => setVans(data))
             .catch(err => setError(err))
             .finally(() => setLoading(false))
-    }, [])
+    }, [authReady])
 
     function renderVanElements(vans) {
         const hostVansEls = vans.map((van) => (
@@ -34,9 +48,9 @@ export default function Dashboard() {
         )
     }
 
-    // if (loading) {
-    //     return <h1>Loading...</h1>
-    // }
+    if (loading) {
+        return <DashboardSkeleton />
+    }
 
     if (error) {
         return <h1>Error: {error.message}</h1>
@@ -67,18 +81,7 @@ export default function Dashboard() {
                     <h2>Your listed vans</h2>
                     <Link to="vans">View all</Link>
                 </div>
-                {
-                    loading && !vans
-                    ? <h1>Loading...</h1>
-                    : (
-                        <>
-                            {renderVanElements(vans)}
-                        </>
-                    )
-                }
-                {/*<React.Suspense fallback={<h3>Loading...</h3>}>
-                    <Await resolve={loaderData.vans}>{renderVanElements}</Await>
-                </React.Suspense>*/}
+                {renderVanElements(vans)}
             </section>
         </>
     )

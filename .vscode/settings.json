@@ -1,3 +1,15 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    // Do not reuse the same preview tab when opening files
+    "workbench.editor.enablePreview": false,
+    // Open new tabs to the right to keep layout stable
+    "workbench.editor.openPositioning": "right",
+    // Don't auto-reveal files in the explorer when switching tabs
+    "explorer.autoReveal": false,
+    // Keep editors open on file delete/rename dialogs
+    "workbench.editor.closeOnFileDelete": false,
+    // Prevent auto-opening problems panel on errors
+    "problems.autoReveal": false,
+    // Reduce UI noise when terminal shows activity
+    "workbench.panel.opensMaximized": "never"
 }

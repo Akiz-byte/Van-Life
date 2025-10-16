@@ -7,20 +7,24 @@ import {
     getDoc,
     query,
     where,
-    documentId
+    documentId,
+    addDoc,
+    serverTimestamp
 } from "firebase/firestore/lite"
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile } from "firebase/auth"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD_k3v3HK3tKEqhlqFHPkwogW7PqEqhGhk",
-    authDomain: "vanlife-a1af5.firebaseapp.com",
-    projectId: "vanlife-a1af5",
-    storageBucket: "vanlife-a1af5.appspot.com",
-    messagingSenderId: "803007000356",
-    appId: "1:803007000356:web:446cd3a1ca406839258db1"
+  apiKey: "AIzaSyAdKInlurADOjxHQeHNQmNWQ2xLmd3FwsI",
+  authDomain: "live-vans-life.firebaseapp.com",
+  projectId: "live-vans-life",
+  storageBucket: "live-vans-life.firebasestorage.app",
+  messagingSenderId: "950507739255",
+  appId: "1:950507739255:web:2426d523c135b9911e8e72"
 };
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
+export { db }
 
 // Refactoring the fetching functions below
 const vansCollectionRef = collection(db, "vans")
@@ -44,7 +48,16 @@ export async function getVan(id) {
 }
 
 export async function getHostVans() {
-    const q = query(vansCollectionRef, where("hostId", "==", "123"))
+    const auth = getAuth()
+    const uid = auth.currentUser?.uid
+    if (!uid) {
+        throw {
+            message: "Not authenticated",
+            statusText: "Unauthorized",
+            status: 401
+        }
+    }
+    const q = query(vansCollectionRef, where("hostId", "==", uid))
     const snapshot = await getDocs(q)
     const vans = snapshot.docs.map(doc => ({
         ...doc.data(),
@@ -83,19 +96,69 @@ It also shows how you can chain together multiple `where` filter calls
 //     return vans[0]
 // }
 
-export async function loginUser(creds) {
-    const res = await fetch("/api/login",
-        { method: "post", body: JSON.stringify(creds) }
-    )
-    const data = await res.json()
+export async function loginUser({ email, password }) {
+    const auth = getAuth()
+    const res = await signInWithEmailAndPassword(auth, email, password)
+    const user = res.user
+    return {
+        user: {
+            uid: user.uid,
+            email: user.email
+        },
+        token: await user.getIdToken()
+    }
+}
 
-    if (!res.ok) {
+export async function signupUser({ fullName, email, password }) {
+    const auth = getAuth()
+    const res = await createUserWithEmailAndPassword(auth, email, password)
+    const user = res.user
+    if (fullName) {
+        try { await updateProfile(user, { displayName: fullName }) } catch {}
+    }
+    return {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || fullName || null
+    }
+}
+
+export function logoutUser() {
+    const auth = getAuth()
+    return signOut(auth)
+}
+
+export async function rentVan(vanId) {
+    const auth = getAuth()
+    const uid = auth.currentUser?.uid
+    if (!uid) {
         throw {
-            message: data.message,
-            statusText: res.statusText,
-            status: res.status
+            message: "Not authenticated",
+            statusText: "Unauthorized",
+            status: 401
         }
     }
 
-    return data
+    // Get the original van details
+    const vanDoc = await getVan(vanId)
+    
+    // Create a new van document for the user (rental copy)
+    const rentalVan = {
+        name: vanDoc.name,
+        price: vanDoc.price,
+        description: vanDoc.description,
+        imageUrl: vanDoc.imageUrl,
+        type: vanDoc.type,
+        hostId: uid, // Set the current user as the host
+        originalVanId: vanId, // Keep reference to original
+        rentedAt: serverTimestamp()
+    }
+
+    // Add the rental van to the vans collection
+    const docRef = await addDoc(vansCollectionRef, rentalVan)
+    
+    return {
+        ...rentalVan,
+        id: docRef.id
+    }
 }

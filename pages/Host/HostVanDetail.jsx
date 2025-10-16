@@ -1,6 +1,7 @@
 import React from "react"
 import { useParams, Link, NavLink, Outlet } from "react-router-dom"
 import { getVan } from "../../api"
+import { HostVanDetailSkeleton } from "../../components/SkeletonLoader"
 
 export default function HostVanDetail() {
     const [currentVan, setCurrentVan] = React.useState(null)
@@ -25,7 +26,7 @@ export default function HostVanDetail() {
     }, [id])
 
     if (loading) {
-        return <h1>Loading...</h1>
+        return <HostVanDetailSkeleton />
     }
 
     if (error) {

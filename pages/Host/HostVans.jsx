@@ -1,13 +1,26 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { getHostVans } from "../../api"
+import { HostVansSkeleton } from "../../components/SkeletonLoader"
 
 export default function HostVans() {
     const [vans, setVans] = React.useState([])
-    const [loading, setLoading] = React.useState(false)
+    const [loading, setLoading] = React.useState(true)
     const [error, setError] = React.useState(null)
+    const [authReady, setAuthReady] = React.useState(false)
 
     React.useEffect(() => {
+        const auth = getAuth()
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setAuthReady(true)
+        })
+        return () => unsubscribe()
+    }, [])
+
+    React.useEffect(() => {
+        if (!authReady) return
+
         async function loadVans() {
             setLoading(true)
             try {
@@ -20,7 +33,7 @@ export default function HostVans() {
             }
         }
         loadVans()
-    }, [])
+    }, [authReady])
 
     const hostVansEls = vans.map(van => (
         <Link
@@ -39,7 +52,7 @@ export default function HostVans() {
     ))
 
     if (loading) {
-        return <h1>Loading...</h1>
+        return <HostVansSkeleton />
     }
 
     if (error) {
@@ -55,10 +68,9 @@ export default function HostVans() {
                         <section>
                             {hostVansEls}
                         </section>
-
                     ) : (
-                            <h2>Loading...</h2>
-                        )
+                        <h2>No vans listed yet.</h2>
+                    )
                 }
             </div>
         </section>

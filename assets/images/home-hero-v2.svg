@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="960" y1="0" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="50%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD27A"/>
+      <stop offset="100%" stop-color="#FF8C38"/>
+    </linearGradient>
+    <linearGradient id="hill1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B3B3C"/>
+      <stop offset="100%" stop-color="#115E59"/>
+    </linearGradient>
+    <linearGradient id="hill2" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2F2F2F"/>
+      <stop offset="100%" stop-color="#161616"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky -->
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <!-- Sun -->
+  <circle cx="1480" cy="240" r="120" fill="url(#sun)" opacity="0.9"/>
+  <!-- Distant mountains -->
+  <path d="M0 680 L240 600 L420 690 L660 540 L900 700 L1200 560 L1500 720 L1800 600 L1920 660 L1920 1080 L0 1080 Z" fill="#0F3C73" opacity="0.35"/>
+  <path d="M0 760 L200 700 L420 760 L640 680 L860 760 L1120 700 L1380 780 L1680 720 L1920 760 L1920 1080 L0 1080 Z" fill="#0C4A6E" opacity="0.45"/>
+  <!-- Near hills -->
+  <path d="M0 860 C 300 780, 540 900, 840 840 C 1140 780, 1440 900, 1920 820 L 1920 1080 L 0 1080 Z" fill="url(#hill1)" opacity="0.9"/>
+  <path d="M0 940 C 260 900, 520 980, 820 940 C 1120 900, 1460 980, 1920 920 L 1920 1080 L 0 1080 Z" fill="url(#hill2)"/>
+</svg>

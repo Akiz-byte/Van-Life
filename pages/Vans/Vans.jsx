@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { getVans } from "../../api"
+import { VanListSkeleton } from "../../components/SkeletonLoader"
 
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -61,7 +62,7 @@ export default function Vans() {
     }
 
     if (loading) {
-        return <h1>Loading...</h1>
+        return <VanListSkeleton />
     }
     
     if (error) {

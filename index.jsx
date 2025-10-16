@@ -18,8 +18,10 @@ import NotFound from "./pages/NotFound"
 import Layout from "./components/Layout"
 import HostLayout from "./components/HostLayout"
 import AuthRequired from "./components/AuthRequired"
+import Profile from "./pages/Profile"
+import Signup from "./pages/Signup"
 
-import "./server"
+// Mirage removed
 
 function App() {
   /**
@@ -39,6 +41,8 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="vans" element={<Vans />} />
           <Route path="vans/:id" element={<VanDetail />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="signup" element={<Signup />} />
           <Route
             path="login"
             element={<Login />}
