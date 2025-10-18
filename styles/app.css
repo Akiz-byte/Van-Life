@@ -1,0 +1,11 @@
+@import './global.css';
+@import './components/Header.css';
+@import './components/Footer.css';
+@import './components/SkeletonLoader.css';
+@import './pages/Home.css';
+@import './pages/About.css';
+@import './pages/Vans.css';
+@import './pages/Profile.css';
+@import './pages/Auth.css';
+@import './pages/Host.css';
+@import './pages/NotFound.css';

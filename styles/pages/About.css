@@ -1,0 +1,37 @@
+.about-hero-image {
+	width: 100%;
+}
+
+.about-page-content {
+	padding-inline: 16px;
+	color: #161616;
+	margin-bottom: 36px;
+}
+
+.about-page-content h1 {
+	line-height: 38px;
+}
+
+.about-page-content p {
+    line-height: 22px;
+}
+
+.about-page-cta {
+	background-color: #ffcc8d;
+	color: #161616;
+	padding-inline: 24px;
+	padding-bottom: 28px;
+	margin-inline: 20px;
+	border-radius: 8px;
+}
+
+.about-page-cta h2 {
+	margin: 0;
+	padding-block: 28px;
+}
+
+.about-page-cta .link-button {
+	background-color: #D97706;
+	color: #fff;
+	border-radius: 10px;
+}

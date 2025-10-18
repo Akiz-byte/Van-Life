@@ -7,13 +7,11 @@ import {
     getDoc,
     query,
     where,
-    documentId,
     addDoc,
     serverTimestamp
 } from "firebase/firestore/lite"
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile } from "firebase/auth"
 
-// Read Firebase config from Vite environment variables
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -23,40 +21,38 @@ const firebaseConfig = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// Optional: warn if any env variables are missing
-if (!firebaseConfig.apiKey || !firebaseConfig.projectId || !firebaseConfig.appId) {
-    // eslint-disable-next-line no-console
-    console.warn(
-        "Firebase environment variables are missing. Please create a .env file with VITE_FIREBASE_* values."
-    )
-}
-
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 export { db }
 
-// Refactoring the fetching functions below
 const vansCollectionRef = collection(db, "vans")
+const quotesCollectionRef = collection(db, "quotes")
 
 export async function getVans() {
     const snapshot = await getDocs(vansCollectionRef)
-    const vans = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-    }))
+    const vans = snapshot.docs
+        .filter(d => !d.data().originalVanId)
+        .map(doc => ({
+            ...doc.data(),
+            id: doc.id
+        }))
     return vans
 }
 
 export async function getVan(id) {
     const docRef = doc(db, "vans", id)
     const snapshot = await getDoc(docRef)
-    return {
-        ...snapshot.data(),
-        id: snapshot.id
+    const data = snapshot.data()
+    if (!data) return null
+    if (data.originalVanId) {
+        const origRef = doc(db, "vans", data.originalVanId)
+        const origSnap = await getDoc(origRef)
+        return { ...origSnap.data(), id: origSnap.id }
     }
+    return { ...data, id: snapshot.id }
 }
 
-export async function getHostVans() {
+export async function rentVan(vanId) {
     const auth = getAuth()
     const uid = auth.currentUser?.uid
     if (!uid) {
@@ -66,16 +62,32 @@ export async function getHostVans() {
             status: 401
         }
     }
-    const q = query(vansCollectionRef, where("hostId", "==", uid))
-    const snapshot = await getDocs(q)
-    const vans = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-    }))
-    return vans
-}
 
-//
+    const alreadyRented = await isVanRentedByUser(vanId)
+    if (alreadyRented) {
+        return null
+    }
+
+    const vanDoc = await getVan(vanId)
+    
+    const rentalVan = {
+        name: vanDoc.name,
+        price: vanDoc.price,
+        description: vanDoc.description,
+        imageUrl: vanDoc.imageUrl,
+        type: vanDoc.type,
+        hostId: uid,
+        originalVanId: vanId,
+        rentedAt: serverTimestamp()
+    }
+
+    const docRef = await addDoc(vansCollectionRef, rentalVan)
+    
+    return {
+        ...rentalVan,
+        id: docRef.id
+    }
+}
 
 export async function loginUser({ email, password }) {
     const auth = getAuth()
@@ -109,37 +121,42 @@ export function logoutUser() {
     return signOut(auth)
 }
 
-export async function rentVan(vanId) {
+export async function isVanRentedByUser(vanId) {
+    const auth = getAuth()
+    const uid = auth.currentUser?.uid
+    if (!uid) return false
+
+    const q = query(vansCollectionRef, where("hostId", "==", uid))
+    const snapshot = await getDocs(q)
+    return snapshot.docs.some(d => d.data().originalVanId === vanId)
+}
+
+export async function getHostVans() {
     const auth = getAuth()
     const uid = auth.currentUser?.uid
     if (!uid) {
         throw {
             message: "Not authenticated",
-            statusText: "Unauthorized",
+            statusText: "Unauthorized", 
             status: 401
         }
     }
 
-    // Get the original van details
-    const vanDoc = await getVan(vanId)
-    
-    // Create a new van document for the user (rental copy)
-    const rentalVan = {
-        name: vanDoc.name,
-        price: vanDoc.price,
-        description: vanDoc.description,
-        imageUrl: vanDoc.imageUrl,
-        type: vanDoc.type,
-        hostId: uid, // Set the current user as the host
-        originalVanId: vanId, // Keep reference to original
-        rentedAt: serverTimestamp()
-    }
+    const q = query(vansCollectionRef, where("hostId", "==", uid))
+    const snapshot = await getDocs(q)
+    const vans = snapshot.docs
+        .map(doc => ({ ...doc.data(), id: doc.id }))
+        .filter(v => !!v.originalVanId)
+    return vans
+}
 
-    // Add the rental van to the vans collection
-    const docRef = await addDoc(vansCollectionRef, rentalVan)
-    
-    return {
-        ...rentalVan,
-        id: docRef.id
-    }
+export async function getRandomQuote() {
+    const snapshot = await getDocs(quotesCollectionRef)
+    if (snapshot.empty) return null
+    const items = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
+    const pick = items[Math.floor(Math.random() * items.length)] || {}
+    const text = pick.text || pick.quote || pick.q || ""
+    const author = pick.author || pick.a || ""
+    if (!text) return null
+    return { text, author }
 }

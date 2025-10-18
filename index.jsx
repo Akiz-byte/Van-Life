@@ -31,7 +31,9 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="vans" element={<Vans />} />
           <Route path="vans/:id" element={<VanDetail />} />
-          <Route path="profile" element={<Profile />} />
+          <Route element={<AuthRequired />}>
+            <Route path="profile" element={<Profile />} />
+          </Route>
           <Route path="signup" element={<Signup />} />
           <Route
             path="login"

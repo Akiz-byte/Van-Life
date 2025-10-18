@@ -16,7 +16,7 @@ export default function AuthRequired() {
         return () => unsub()
     }, [])
 
-    if (!authChecked) return null // or a loader
+    if (!authChecked) return null
 
     if (!isLoggedIn) {
         return (

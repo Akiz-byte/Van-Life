@@ -22,6 +22,20 @@ export default function Header() {
         setMobileMenuOpen(false)
     }
 
+    function getUserLabel(u) {
+        if (!u) return ""
+        const name = (u.displayName || "").trim()
+        if (name) {
+            const first = name.split(" ")[0]
+            return first
+        }
+        const email = (u.email || "").trim()
+        if (email && email.includes("@")) {
+            return email.split("@")[0]
+        }
+        return email || "Profile"
+    }
+
     return (
         <header>
             <div className="header-inner">
@@ -70,7 +84,13 @@ export default function Header() {
                         onClick={closeMobileMenu}
                     >
                         <img src={avatarUrl} className="login-icon" alt="Account" />
-                        <span className="login-text">{user ? "Profile" : "Login"}</span>
+                        {user ? (
+                            <span className="user-name" title={user.displayName || user.email}>
+                                {getUserLabel(user)}
+                            </span>
+                        ) : (
+                            <span className="login-text">Login</span>
+                        )}
                     </Link>
                 </nav>
             </div>

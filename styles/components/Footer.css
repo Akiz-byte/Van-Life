@@ -1,0 +1,144 @@
+footer {
+	background-color: #161616;
+	color: #aaa;
+	padding: 20px 16px 12px;
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	margin-top: auto;
+	font-weight: 400;
+}
+
+.footer-inner {
+	width: 100%;
+	max-width: 1080px;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 32px;
+	margin-bottom: 14px;
+	align-items: center;
+}
+
+.footer-section h3,
+.footer-section h4 {
+	color: #fff;
+	margin: 0 0 8px 0;
+	font-weight: 700;
+}
+
+.footer-brand {
+	font-size: 1.25rem;
+	letter-spacing: 0.2px;
+}
+
+.footer-tagline {
+	font-size: 0.8125rem;
+	line-height: 1.4;
+	color: #999;
+	margin: 0;
+	max-width: 280px;
+}
+
+.footer-section h4 {
+	font-size: 0.8125rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.footer-links {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.footer-links li {
+	margin-bottom: 10px;
+}
+
+.footer-links a {
+	color: #aaa;
+	text-decoration: none;
+	font-size: 0.9rem;
+	transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+	color: #D97706;
+	text-decoration: none;
+}
+
+.footer-social {
+	display: flex;
+	gap: 12px;
+	margin-top: 4px;
+}
+
+.footer-social a {
+	color: #aaa;
+	transition: color 0.2s ease, transform 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+.footer-social a:hover {
+	color: #D97706;
+	background-color: rgba(217, 119, 6, 0.1);
+	transform: translateY(-2px);
+}
+
+.footer-social svg {
+	stroke: currentColor;
+	fill: none;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	width: 18px;
+	height: 18px;
+}
+
+.footer-bottom {
+	width: 100%;
+	max-width: 1080px;
+	margin: 0 auto;
+	padding-top: 12px;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	text-align: center;
+}
+
+.footer-bottom p {
+	margin: 0;
+	font-size: 0.75rem;
+	color: #777;
+}
+
+@media (max-width: 768px) {
+	.footer-inner {
+		grid-template-columns: 1fr;
+		gap: 20px;
+		text-align: center;
+	}
+
+	footer {
+		padding: 18px 16px 12px;
+	}
+
+	.footer-tagline {
+		max-width: 100%;
+	}
+
+	.footer-social {
+		justify-content: center;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.footer-inner {
+		grid-template-columns: 1fr 1fr;
+	}
+}

@@ -40,7 +40,6 @@ export default function VanDetail() {
 
     async function handleRentVan() {
         if (!isAuthenticated) {
-            // Redirect to login with state to return here
             navigate("/login", { 
                 state: { 
                     message: "You must log in first to rent a van",

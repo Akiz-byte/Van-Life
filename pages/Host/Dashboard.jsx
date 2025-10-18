@@ -30,7 +30,7 @@ export default function Dashboard() {
     }, [authReady])
 
     function renderVanElements(vans) {
-        const hostVansEls = vans.map((van) => (
+        const hostVansEls = vans.slice(-4, -1).map((van) => (
             <div className="host-van-single" key={van.id}>
                 <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
                 <div className="host-van-info">
