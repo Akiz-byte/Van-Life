@@ -22,11 +22,35 @@
 	margin: 0 auto;
 }
 
-.home-container h1 {
-	margin: 0 0 12px;
+
+.home-title {
+	margin: 0 0 35px;
 	font-weight: 800;
 	font-size: 2.25rem;
 	line-height: 1.15;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.home-title-mobile {
+	display: block;
+}
+.home-title-desktop {
+	display: none;
+}
+
+@media (min-width: 640px) {
+	.home-title-mobile {
+		display: none;
+	}
+	.home-title-desktop {
+		display: block;
+	}
+	.home-title {
+		font-size: 2.75rem;
+	}
 }
 
 .home-accent {
@@ -35,15 +59,18 @@
 
 .home-subtitle {
 	max-width: 680px;
-	margin: 0 0 24px;
+	margin: 0 auto 24px auto;
 	font-size: 1rem;
 	line-height: 1.6;
+	text-align: center;
 }
 
 .home-cta {
 	display: flex;
-	gap: 12px;
+	gap: 20px;
 	flex-wrap: wrap;
+	justify-content: center;
+	margin-bottom: 8px;
 }
 
 @media (min-width: 640px) {

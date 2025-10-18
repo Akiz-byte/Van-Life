@@ -2,6 +2,7 @@ import React from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { getVans } from "../../api"
 import { VanListSkeleton } from "../../components/SkeletonLoader"
+import ErrorFallback from "../../components/ErrorFallback"
 
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -66,7 +67,7 @@ export default function Vans() {
     }
     
     if (error) {
-        return <h1>There was an error: {error.message}</h1>
+        return <ErrorFallback error={error} reset={() => window.location.reload()} />
     }
 
     return (

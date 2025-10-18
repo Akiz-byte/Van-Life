@@ -5,9 +5,13 @@ export default function Home() {
     return (
         <section className="home-container">
             <div className="home-inner">
-                <h1>
-                    You got the travel plans,
-                    we got the travel <span className="home-accent">vans</span>.
+                <h1 className="home-title">
+                    <span className="home-title-mobile">
+                        You got the<br />travel plans,<br />we got the<br />travel <span className="home-accent">vans</span>.
+                    </span>
+                    <span className="home-title-desktop">
+                        You got the travel plans, we got the travel <span className="home-accent">vans</span>.
+                    </span>
                 </h1>
                 <p className="home-subtitle">
                     Add adventure to your life by joining the #vanlife movement.

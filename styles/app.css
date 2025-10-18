@@ -2,6 +2,8 @@
 @import './components/Header.css';
 @import './components/Footer.css';
 @import './components/SkeletonLoader.css';
+@import './components/ErrorFallback.css';
+@import './components/Loader.css';
 @import './pages/Home.css';
 @import './pages/About.css';
 @import './pages/Vans.css';
